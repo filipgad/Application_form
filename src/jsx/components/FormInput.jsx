@@ -3,13 +3,28 @@ import PropTypes from 'prop-types';
 
 class FormInput extends React.Component {
     render() {
-        const {name, type, placeholder } = this.props;
+        const { title, type, name, placeholder, value, onChange } = this.props;
         return (
-            <label>
-                <input type={type} name={name} placeholder={placeholder}/>
-            </label>
+            <div>
+                <label>{title}</label>
+                <input 
+                    type={type} 
+                    name={name} 
+                    placeholder={placeholder}
+                    value={value}
+                    onChange={onChange}
+                    required/>
+            </div>    
         );
     }
 }
 
-export default FormInput;
+FormInput.propTypes = {
+    title: PropTypes.string,
+    type: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
+    value: PropTypes.string.isRequired,
+    onChange: PropTypes.func,
+}
+
+export default FormInput

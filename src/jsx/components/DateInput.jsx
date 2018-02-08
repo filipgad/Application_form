@@ -28,4 +28,4 @@ class DateInput extends React.Component {
     }
 }
 
-export default DateInput;
+export default DateInput
