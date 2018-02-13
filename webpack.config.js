@@ -1,22 +1,23 @@
+const path = require('path');
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-module.exports = {
-    entry: ["./src/jsx/main.jsx","./src/scss/main.scss"],
-    output: { filename: "./dist/js/out.js" },
-    devServer: {
-        inline: true,
-        contentBase: './',
-        port: 3000
+module.exports  = {
+    entry: ['./src/app.js', './src/main.scss'],
+    output: {
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'public')
     },
     watch: true,
-
     module: {
-        loaders: [
+        loaders: [ 
             {
-                test: /\.jsx$/,
-                exclude: /node_modules/,
+                test:/\.js$/,
+                exclude:/node_modules/,
                 loader: 'babel-loader',
-                query: { presets: ['es2015', 'stage-2', 'react'] }
+                query: {
+                    presets: ['react', 'env', 'stage-2']
+                } 
             },
             {
                 test: /\.scss$/,
@@ -25,19 +26,10 @@ module.exports = {
                     fallback: 'style-loader',
                     use: ['css-loader?url=false', 'sass-loader']
                 })
-            },
-            {
-                test: /\.(png|jpg|gif)$/,
-                exclude: /node_modules/,
-                use: [
-                    {
-                        loader: 'url-loader'
-                    }
-                ]
             }
         ]
-    },
+    },    
     plugins: [
-        new ExtractTextPlugin('./dist/css/style.css')
-    ]
-};
+        new ExtractTextPlugin('./style.bundle.css')
+    ] 
+}
