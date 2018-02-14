@@ -28310,14 +28310,30 @@ var FormIndex = function (_Component) {
     _createClass(FormIndex, [{
         key: "renderInput",
         value: function renderInput(field) {
+            var _field$meta = field.meta,
+                touched = _field$meta.touched,
+                error = _field$meta.error;
+
+            var errorStyle = touched && error ? 'inputError' : '';
+
             return _react2.default.createElement(
                 "div",
                 null,
-                _react2.default.createElement("input", _extends({ className: "form_input" }, field.input, { type: field.type, placeholder: field.placeholder }))
+                _react2.default.createElement("input", _extends({
+                    className: "inputForm " + errorStyle
+                }, field.input, {
+                    type: field.type,
+                    placeholder: field.placeholder
+                })),
+                _react2.default.createElement(
+                    "div",
+                    { className: "inputErrorText" },
+                    touched ? error : ''
+                )
             );
         }
     }, {
-        key: "render",
+        key: "onSubmit",
 
 
         // renderDatePicker(field) {
@@ -28334,10 +28350,18 @@ var FormIndex = function (_Component) {
         //     )
         // }
 
+        value: function onSubmit(values) {
+            console.log(values);
+        }
+    }, {
+        key: "render",
         value: function render() {
+            var handleSubmit = this.props.handleSubmit;
+
+
             return _react2.default.createElement(
                 "form",
-                null,
+                { onSubmit: handleSubmit(this.onSubmit.bind(this)) },
                 _react2.default.createElement(
                     "h1",
                     null,
@@ -28390,11 +28414,8 @@ function validate(values) {
     if (!values.lastName) {
         errors.lastName = 'Please enter your last name';
     }
-    if (!values.email) {
-        errors.email = 'Please enter your email';
-    }
-    if (values.email == /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) {
-        errors.email = 'Invalid email';
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = 'Please enter valid email';
     }
     if (!values.eventDate) {
         errors.eventDate = 'Please choose the event date';
