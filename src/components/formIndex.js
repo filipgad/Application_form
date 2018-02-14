@@ -6,9 +6,20 @@ import { Field, reduxForm } from "redux-form";
 class FormIndex extends Component {
 
     renderInput(field) {
+        const { touched, error } = field.meta;
+        const errorStyle = touched && error ? 'inputError' : '';
+
         return (
             <div>
-                <input className="form_input" {...field.input} type={field.type} placeholder={field.placeholder} />
+                <input 
+                    className={`inputForm ${errorStyle}`} 
+                    {...field.input} 
+                    type={field.type} 
+                    placeholder={field.placeholder} 
+                />
+                <div className="inputErrorText">
+                    {touched ? error : ''}
+                </div>
             </div>
         )
     };
@@ -27,9 +38,15 @@ class FormIndex extends Component {
     //     )
     // }
 
+    onSubmit(values) {
+        console.log(values);
+    }
+
     render () {
+        const { handleSubmit } = this.props;
+
         return (
-            <form>
+            <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                 <h1>SIGN UP FOR THE EVENT</h1>
                 <Field 
                     name="firstName"
@@ -79,11 +96,8 @@ function validate(values) {
     if(!values.lastName) {
         errors.lastName = 'Please enter your last name';
     }
-    if(!values.email) {
-        errors.email = 'Please enter your email';
-    }
-    if(values.email == /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) {
-        errors.email = 'Invalid email';
+    if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = 'Please enter valid email';
     }
     if(!values.eventDate) {
         errors.eventDate ='Please choose the event date';
