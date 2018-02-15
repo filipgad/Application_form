@@ -44416,12 +44416,15 @@ var FormIndex = function (_Component) {
                 _react2.default.createElement(_reactDatepicker2.default, {
                     name: name,
                     onChange: onChange,
+                    selected: value || null,
                     placeholderText: placeholder,
                     format: "DD.MM.YYYY",
                     minDate: (0, _moment2.default)(),
                     locale: "pl",
-                    selected: value || null,
-                    readOnly: true
+                    readOnly: true,
+                    showMonthDropdown: true,
+                    showYearDropdown: true,
+                    dropdownMode: "select"
                 }),
                 _react2.default.createElement(
                     "div",
