@@ -29,12 +29,15 @@ class FormIndex extends Component {
                 <DatePicker
                     name={name}
                     onChange={onChange}
+                    selected={value || null}
                     placeholderText={placeholder}
                     format="DD.MM.YYYY"
                     minDate={moment()} 
                     locale="pl"
-                    selected={value || null}
                     readOnly={true}
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
                 />
                 <div className="inputErrorText">
                     {touched ? error : ''}
