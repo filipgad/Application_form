@@ -1,21 +1,20 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
-// import DatePicker from 'react-datepicker';
-// import moment from 'moment';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
 class FormIndex extends Component {
 
-    renderInput(field) {
-        const { touched, error } = field.meta;
+    renderInput({ meta: { touched, error }, input, type, placeholder }) {
         const errorStyle = touched && error ? 'inputError' : '';
 
         return (
             <div>
                 <input 
                     className={`inputForm ${errorStyle}`} 
-                    {...field.input} 
-                    type={field.type} 
-                    placeholder={field.placeholder} 
+                    {...input} 
+                    type={type} 
+                    placeholder={placeholder} 
                 />
                 <div className="inputErrorText">
                     {touched ? error : ''}
@@ -24,19 +23,25 @@ class FormIndex extends Component {
         )
     };
 
-    // renderDatePicker(field) {
-    //     return (
-    //         <div>
-    //             <DatePicker 
-    //                 {...field.input} 
-    //                 placeholderText={field.placeholder} 
-    //                 minDate={field.minDate} 
-    //                 locale="pl"
-    //                 selected={field.input.value ? moment(field.input.value, 'DD/MM/YYYY') : null}
-    //                 />
-    //         </div>
-    //     )
-    // }
+    renderDatePicker = ({ meta: { touched, error }, input: { onChange, value, name }, placeholder }) => {
+        return (
+            <div>
+                <DatePicker
+                    name={name}
+                    onChange={onChange}
+                    placeholderText={placeholder}
+                    format="DD.MM.YYYY"
+                    minDate={moment()} 
+                    locale="pl"
+                    selected={value || null}
+                    readOnly={true}
+                />
+                <div className="inputErrorText">
+                    {touched ? error : ''}
+                </div>
+            </div>
+        );
+    }
 
     onSubmit(values) {
         console.log(values);
@@ -66,28 +71,18 @@ class FormIndex extends Component {
                     placeholder="Email"
                     component={this.renderInput}
                 />
-                <Field 
-                    name="eventDate"
-                    type="date"
-                    placeholder="Choose the event date"
-                    component={this.renderInput}
-                />
-                {/* <Field
+                <Field
                     name="datepicker"
                     placeholder="Choose the event date"
-                    minDate={moment()}
                     component={this.renderDatePicker}
-                    format={(value, name) => value || null}
-                    // if you want normalize before store on redux...
-                    // normalize={value => (value ? moment(value, 'DD/MM/YYYY') : null)}
-                /> */}
+                />
                 <button type="submit">Submit</button>
             </form>
         );
     }
 };
 
-function validate(values) {
+const validate = values => {
     const errors = {};
 
     if(!values.firstName) {
@@ -96,11 +91,13 @@ function validate(values) {
     if(!values.lastName) {
         errors.lastName = 'Please enter your last name';
     }
-    if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Please enter valid email';
+    if(!values.email) {
+        errors.email = 'Please enter your email';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = 'Ivalid email';
     }
-    if(!values.eventDate) {
-        errors.eventDate ='Please choose the event date';
+    if(!values.datepicker) {
+        errors.datepicker ='Please choose the event date';
     }
 
     return errors;
