@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
+import { connect } from 'react-redux';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import * as actions from '../actions/actionIndex';
 
 class FormIndex extends Component {
 
@@ -24,14 +26,17 @@ class FormIndex extends Component {
     };
 
     renderDatePicker = ({ meta: { touched, error }, input: { onChange, value, name }, placeholder }) => {
+        const errorStyle = touched && error ? 'inputError' : '';
+
         return (
             <div>
                 <DatePicker
                     name={name}
                     onChange={onChange}
+                    className={errorStyle}
                     selected={value || null}
                     placeholderText={placeholder}
-                    format="DD.MM.YYYY"
+                    dateFormat="DD.MM.YYYY"
                     minDate={moment()} 
                     locale="pl"
                     readOnly={true}
@@ -47,8 +52,11 @@ class FormIndex extends Component {
     }
 
     onSubmit(values) {
-        console.log(values);
-    }
+        const { signupEvent, reset } = this.props;
+        return signupEvent(values).then( () => {
+            reset();
+        });
+    };
 
     render () {
         const { handleSubmit } = this.props;
@@ -75,11 +83,11 @@ class FormIndex extends Component {
                     component={this.renderInput}
                 />
                 <Field
-                    name="datepicker"
+                    name="eventDate"
                     placeholder="Choose the event date"
                     component={this.renderDatePicker}
                 />
-                <button type="submit">Submit</button>
+                <button type="submit">Sign Up</button>
             </form>
         );
     }
@@ -99,16 +107,16 @@ const validate = values => {
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
         errors.email = 'Ivalid email';
     }
-    if(!values.datepicker) {
-        errors.datepicker ='Please choose the event date';
+    if(!values.eventDate) {
+        errors.eventDate ='Please choose the event date';
     }
 
     return errors;
 };
 
-FormIndex = reduxForm({
+export default reduxForm({
     validate,
-    form: 'SignUpForm'
-})(FormIndex);
-
-export default FormIndex;
+    form: 'SignUpForm',
+})(
+    connect(null, actions)(FormIndex)
+);
