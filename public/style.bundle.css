@@ -127,6 +127,8 @@
 
 .react-datepicker__header--time {
   padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .react-datepicker__year-dropdown-container--select,
@@ -145,6 +147,12 @@
   color: #000;
   font-weight: bold;
   font-size: 0.944rem;
+}
+
+.react-datepicker-time__header {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .react-datepicker__navigation {
@@ -230,6 +238,7 @@
 .react-datepicker__time-container {
   float: right;
   border-left: 1px solid #aeaeae;
+  width: 70px;
 }
 
 .react-datepicker__time-container--with-today-button {
@@ -249,6 +258,8 @@
 .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box {
   width: 70px;
   overflow-x: hidden;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list {
@@ -258,6 +269,7 @@
   overflow-y: scroll;
   padding-right: 30px;
   width: 100%;
+  box-sizing: content-box;
 }
 
 .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item {
@@ -672,7 +684,8 @@ button {
   background-color: #FF9E3D;
   color: #203A60;
   box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
-  cursor: pointer; }
+  cursor: pointer;
+  outline: 0; }
   button:hover {
     background-color: #ff850a; }
 
