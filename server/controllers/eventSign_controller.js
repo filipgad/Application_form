@@ -1,4 +1,4 @@
-const SignForm = require('./models/signForm');
+const SignForm = require('../models/signForm');
 
 module.exports = {
     create(req, res, next) {

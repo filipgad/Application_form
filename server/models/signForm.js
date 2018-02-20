@@ -20,6 +20,6 @@ const SignFormSchema = new Schema({
     }
 });
 
-const SignForm = mongoose.model('signForms', SignFormSchema);
+const SignForm = mongoose.model('signforms', SignFormSchema);
 
 module.exports = SignForm;

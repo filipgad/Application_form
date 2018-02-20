@@ -3,7 +3,7 @@ import { Field, reduxForm } from "redux-form";
 import { connect } from 'react-redux';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import * as actions from '../actions/actionIndex';
+import { signupEvent } from '../actions/actionIndex';
 
 class FormIndex extends Component {
 
@@ -19,7 +19,7 @@ class FormIndex extends Component {
                     placeholder={placeholder} 
                 />
                 <div className="inputErrorText">
-                    {touched ? error : ''}
+                    {touched && error &&  <span>{error}</span>}
                 </div>
             </div>
         )
@@ -34,9 +34,10 @@ class FormIndex extends Component {
                     name={name}
                     onChange={onChange}
                     className={errorStyle}
-                    selected={value || null}
+                    selected={value ? moment(value) : null}
                     placeholderText={placeholder}
-                    dateFormat="DD.MM.YYYY"
+                    dateFormat="DD-MM-YYYY"
+                    utcOffset={1}
                     minDate={moment()} 
                     locale="pl"
                     readOnly={true}
@@ -45,7 +46,7 @@ class FormIndex extends Component {
                     dropdownMode="select"
                 />
                 <div className="inputErrorText">
-                    {touched ? error : ''}
+                    {touched && error &&  <span>{error}</span>}
                 </div>
             </div>
         );
@@ -118,5 +119,5 @@ export default reduxForm({
     validate,
     form: 'SignUpForm',
 })(
-    connect(null, actions)(FormIndex)
+    connect(null, { signupEvent })(FormIndex)
 );
