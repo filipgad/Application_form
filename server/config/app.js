@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
 const mongoose = require('mongoose');
 const router = require('./router');
 const app = express();
@@ -12,7 +13,7 @@ if (process.env.NODE_ENV !== 'test') {
 
 
 app.use(bodyParser.json());
-app.use(express.static('../client/public'));
+app.use(express.static(path.join(__dirname, '../../client/public')));
 router(app);
 
 app.use((err, req, res, next) => {
