@@ -59,7 +59,7 @@ class FormIndex extends Component {
         });
     };
 
-    render () {
+    render() {
         const { handleSubmit } = this.props;
 
         return (
@@ -109,7 +109,7 @@ const validate = values => {
         errors.email = 'Ivalid email';
     }
     if(!values.eventDate) {
-        errors.eventDate ='Please choose the event date';
+        errors.eventDate = 'Please choose the event date';
     }
 
     return errors;
