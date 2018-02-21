@@ -9,7 +9,7 @@ It's a small application form for the event. Data from this form are save in dat
 npm install
 ```
 
-2. To start the application
+2. Start server - in server folder
 ```
 npm start
 ```
