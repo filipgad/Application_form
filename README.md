@@ -1,6 +1,6 @@
 # Application_form
 
-It's a small application form for the event. Data from this form are save in database (mongoDB) using Node.js.
+It's the application form for the event. Data from this form are save in database (mongoDB) using Node.js.
 
 ## Installation
 
